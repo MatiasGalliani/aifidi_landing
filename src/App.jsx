@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa'
 import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
-import family_w_dog from './assets/family_with_dog.png'
+import family_w_dog from './assets/businessmen.png'
 import savingSvg from './assets/saving.svg'
 import './App.css'
 import aiQuintoLogo from './assets/logo.png'
@@ -87,12 +87,12 @@ function FAQ() {
     {
       question: "Quali dati devo fornire inizialmente per richiedere una consulenza?",
       answer:
-        "Nella prima fase ti verrà richiesto semplicemente di indicare l'importo desiderato, lo scopo del finanziamento, il nome dell'azienda e le città della sede legale e operativa. Successivamente, un consulente ti contatterà per ulteriori approfondimenti."
+        "Nella prima fase ti verrà richiesto semplicemente di indicare l'importo desiderato, lo scopo del finanziamento, il nome dell'azienda e le città della sede legale e operativa. Successivamente, un consulente ti contatterà per ulteriori approfondimenti oppure potrai programmare autonomamente una videochiamata gratuita con un consulente."
     },
     {
       question: "Quanto tempo serve per ottenere una risposta sulla richiesta di finanziamento?",
       answer:
-        "Una volta completata la richiesta online, un consulente esperto ti contatterà entro poche ore per procedere velocemente con l'analisi della documentazione e comunicarti la fattibilità della tua richiesta."
+        "Una volta completata la richiesta online, potrai programmare direttamente una videochiamata gratuita esplorativa con un consulente oppure potrai richiedere di essere contattato, un esperto ti contatterà entro poche ore per procedere velocemente con l'analisi della documentazione e comunicarti la fattibilità della tua richiesta."
     },
     {
       question: "Aifidi.it opera su tutto il territorio nazionale?",
@@ -484,7 +484,7 @@ function MainApp() {
                   Riservato alle partite IVA
                 </p>
                 <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800 animate-fadeIn">
-                  Richiedi subito da € 5.000 a € 50.000.000 per la tua attività
+                  Richiedi subito da € 5.000 a € 50.000.000 per la tua attività!
                 </h2>
                 <p className="text-lg text-gray-900 mt-4 animate-fadeIn">
                   Consulenti esperti per finanziare professionisti, start-up e imprese consolidate.
