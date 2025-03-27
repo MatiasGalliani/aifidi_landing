@@ -165,7 +165,7 @@ function FormScreen({ onClose, onFormSubmit }) {
               </div>
               <div className="flex justify-center">
                 <h2 className="text-3xl font-semibold">
-                  Qual è la tua situazione lavorativa?
+                  Qual'è la tua situazione?
                 </h2>
               </div>
               <div>{/* Espacio vacío */}</div>
@@ -183,7 +183,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                     setSelectedOption("pensionato")
                   }}
                 ></div>
-                <span className="text-xl font-semibold">Pensionato</span>
+                <span className="text-xl font-semibold">Professionista</span>
               </div>
               <div
                 className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-4 transition"
@@ -197,7 +197,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                     setSelectedOption("dipendente")
                   }}
                 ></div>
-                <span className="text-xl font-semibold">Dipendente</span>
+                <span className="text-xl font-semibold">Azienda</span>
               </div>
             </div>
             {selectedOption && (
@@ -379,7 +379,7 @@ function FormScreen({ onClose, onFormSubmit }) {
               </button>
               <h2 className="text-3xl font-semibold">Che tipo di dipendente sei</h2>
             </div>
-            
+
             {/* Dropdown principal: Seleziona tipo di dipendente */}
             <div className="w-full max-w-md mb-4">
               <div
@@ -418,7 +418,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                 <p className="text-red-500 text-sm mt-1">{stepErrors.depType}</p>
               )}
             </div>
-        
+
             {/* Dropdown secundario: Seleziona il sottotipo, obligatorio si es Privato */}
             {depType === "Privato" && (
               <div className="w-full max-w-md mb-4">
@@ -456,7 +456,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                 )}
               </div>
             )}
-        
+
             <button
               className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
               onClick={() => {
@@ -503,7 +503,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                 <label className="text-base sm:text-xl font-semibold mb-2">
                   Ente pensionistico
                 </label>
-                <div 
+                <div
                   onClick={() => {
                     setEntePensionisticoDropdownOpen(!entePensionisticoDropdownOpen)
                     setTipologiaDropdownOpen(false) // cierra el otro dropdown
@@ -553,7 +553,7 @@ function FormScreen({ onClose, onFormSubmit }) {
                 <label className="text-base sm:text-xl font-semibold mb-2">
                   Tipologia di pensione
                 </label>
-                <div 
+                <div
                   onClick={() => {
                     setTipologiaDropdownOpen(!tipologiaDropdownOpen)
                     setEntePensionisticoDropdownOpen(false) // cierra el otro dropdown
