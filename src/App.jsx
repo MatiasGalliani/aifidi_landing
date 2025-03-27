@@ -5,7 +5,7 @@ import logo_creditplan from './assets/LOGO-CREDITPLAN.png'
 import family_w_dog from './assets/family_with_dog.png'
 import savingSvg from './assets/saving.svg'
 import './App.css'
-import aiQuintoLogo from './assets/ai_quinto_logo.png'
+import aiQuintoLogo from './assets/logo.png'
 import { Helmet } from "react-helmet-async";
 import ThankYouPage from './BookingPage'
 import FormScreen from './FormScreen'
@@ -65,49 +65,39 @@ function FAQ() {
   const [activeIndex, setActiveIndex] = useState(null)
   const faqs = [
     {
-      question: "Cos'è la Cessione del Quinto?",
+      question: "Cos'è aifidi.it e a chi è rivolto?",
       answer:
-        "La Cessione del Quinto è un prestito personale con una rata mensile che non supera il quinto (20%) del tuo stipendio netto o della tua pensione, trattenuta direttamente in busta paga o sulla pensione."
+        "Aifidi.it è un servizio specializzato di Creditplan, riservato esclusivamente a professionisti e aziende con partita IVA che cercano soluzioni finanziarie per la propria attività."
     },
     {
-      question: "Quanto tempo serve per ottenere il prestito?",
+      question: "Che tipo di finanziamenti posso richiedere su aifidi.it?",
       answer:
-        "Con Creditplan puoi ottenere la liquidità necessaria in pochi giorni grazie ai nostri partner bancari specializzati e al team qualificato di Creditplan."
+        "Puoi richiedere finanziamenti che vanno da €5.000 fino a €50.000.000 per diverse finalità come anticipo fatture, factoring, investimenti aziendali, consolidamento passività, leasing, noleggio operativo, mutui edilizi, fideiussioni commerciali, finanziamenti per liquidità e molto altro."
     },
     {
-      question: "Quali requisiti devo avere per richiedere la Cessione del Quinto?",
+      question: "Quanto costa la consulenza iniziale?",
       answer:
-        "Puoi richiedere la Cessione del Quinto se sei un lavoratore dipendente (pubblico o privato) con contratto a tempo indeterminato o un pensionato. Non è richiesto alcun garante."
+        "La prima consulenza è completamente gratuita. Ti basta compilare il modulo sul sito e verrai rapidamente contattato da un consulente esperto per un'analisi preliminare senza alcun impegno."
     },
     {
-      question: "Esiste un limite massimo di età per la Cessione del Quinto?",
+      question: "Chi mi assisterà nella scelta della soluzione migliore?",
       answer:
-        "Sì, i pensionati possono ottenere il prestito fino a 89 anni alla scadenza del finanziamento."
+        "Su aifidi.it sarai seguito esclusivamente da consulenti qualificati con esperienza specifica nel finanziamento di professionisti, startup e imprese consolidate, garantendo soluzioni personalizzate ed efficaci."
     },
     {
-      question: "Cosa succede se non raggiungo i requisiti per rinnovare una Cessione del Quinto già in corso?",
+      question: "Quali dati devo fornire inizialmente per richiedere una consulenza?",
       answer:
-        "In caso di mancato raggiungimento dei termini per il rinnovo, possiamo valutare insieme la Delegazione di Pagamento, una seconda trattenuta sullo stipendio che permette di ottenere ulteriore liquidità."
+        "Nella prima fase ti verrà richiesto semplicemente di indicare l'importo desiderato, lo scopo del finanziamento, il nome dell'azienda e le città della sede legale e operativa. Successivamente, un consulente ti contatterà per ulteriori approfondimenti."
     },
     {
-      question: "Perché dovrei scegliere Creditplan?",
+      question: "Quanto tempo serve per ottenere una risposta sulla richiesta di finanziamento?",
       answer:
-        "Offriamo tempi rapidi di erogazione. Collaboriamo con partner bancari convenzionati INPS, garantendo sicurezza e affidabilità. Abbiamo un team dedicato di professionisti a tua disposizione. Nessuna spesa aggiuntiva la consulenza è gratuita. Tassi altamente competitivi."
+        "Una volta completata la richiesta online, un consulente esperto ti contatterà entro poche ore per procedere velocemente con l'analisi della documentazione e comunicarti la fattibilità della tua richiesta."
     },
     {
-      question: "Posso richiedere il prestito se sono stato segnalato come cattivo pagatore?",
+      question: "Aifidi.it opera su tutto il territorio nazionale?",
       answer:
-        "Sì, la Cessione del Quinto è accessibile anche in caso di segnalazioni o protesti, in quanto non si basa sulla tua storia creditizia, ma sul tuo stipendio o pensione."
-    },
-    {
-      question: "È possibile estinguere anticipatamente la Cessione del Quinto?",
-      answer:
-        "Sì, puoi estinguere anticipatamente il prestito in qualsiasi momento beneficiando della riduzione degli interessi residui."
-    },
-    {
-      question: "Quanto costa la consulenza iniziale con Creditplan?",
-      answer:
-        "La consulenza iniziale con i nostri esperti è completamente gratuita e senza impegno."
+        "Sì, il servizio è disponibile in tutta Italia, indipendentemente dalla regione o dalla città della tua attività."
     }
   ]
 
@@ -421,8 +411,8 @@ function MainApp() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "FinancialProduct",
-    "name": "Cessione del Quinto - Prestiti per Dipendenti e Pensionati",
-    "description": "Ottieni un prestito sicuro con la cessione del quinto per dipendenti pubblici e pensionati con tassi agevolati e rate fisse.",
+    "name": "AIfidi.it by Creditplan",
+    "description": "Finanziamenti da €5.000 a €50.000.000 per aziende e partite IVA. Consulenza gratuita per anticipo fatture, leasing, liquidità e investimenti aziendali! 🏆",
     "provider": {
       "@type": "FinancialService",
       "name": "Creditplan",
@@ -437,8 +427,8 @@ function MainApp() {
     },
     "offers": {
       "@type": "LoanOrCredit",
-      "name": "Cessione del Quinto Creditplan",
-      "loanType": "Cessione del Quinto",
+      "name": "AIfidi.it by Creditplan",
+      "loanType": "Fido, Aziende, Partite IVA",
       "interestRate": "3.5",
       "loanTerm": "120 mesi",
       "amount": {
@@ -465,8 +455,8 @@ function MainApp() {
   return (
     <div className="flex flex-col min-h-screen animate-fadeIn overflow-x-hidden">
       <Helmet>
-        <title>Cessione del Quinto - Creditplan</title>
-        <meta name="description" content="Ottieni un prestito sicuro con la cessione del quinto per dipendenti pubblici e pensionati con tassi agevolati." />
+        <title>AIfidi.it by Creditplan</title>
+        <meta name="description" content="🚀 Finanziamenti da €5.000 a €50.000.000 per aziende e partite IVA. Consulenza gratuita per anticipo fatture, leasing, liquidità e investimenti aziendali! 🏆" />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
@@ -491,16 +481,16 @@ function MainApp() {
                   />
                 </h1>
                 <p className="inline-block text-xs font-medium text-green-950 mt-4 py-0.5 bg-green-200 px-2 border border-green-500 rounded-lg animate-fadeIn">
-                  Offerta a tempo limitato
+                  Riservato alle partite IVA
                 </p>
                 <h2 className="text-3xl md:text-5xl font-semibold mt-4 text-gray-800 animate-fadeIn">
-                  Richiedi subito fino a € 75.000 per la tua Cessione del Quinto
+                  Richiedi subito da € 5.000 a € 50.000.000 per la tua attività
                 </h2>
                 <p className="text-lg text-gray-900 mt-4 animate-fadeIn">
-                  Risparmia tempo e denaro con AIquinto.it by Creditplan.
+                  Consulenti esperti per finanziare professionisti, start-up e imprese consolidate.
                 </p>
                 <p className="text-2xl font-medium text-gray-800 mt-5 animate-fadeIn">
-                  Richiedi la Cessione del Quinto in pochi click.
+                  Richiedi la tua prima consulenza gratuita in pochi click.
                 </p>
                 <p>
                   Rispondi a poche domande per ricevere il tuo preventivo personalizzato.
@@ -596,7 +586,7 @@ function MainApp() {
               <h2 className="text-3xl font-semibold text-center mb-8 animate-fadeIn">
                 Richiedi subito la tua
                 <br />
-                Cessione del Quinto!
+                prima consulenza
               </h2>
               <div className="my-8 flex flex-col md:flex-row gap-4">
                 <div

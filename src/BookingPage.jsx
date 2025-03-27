@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import aiQuintoLogo from './assets/ai_quinto_logo.png';
+import aiQuintoLogo from './assets/logo.png';
 import logo_creditplan from './assets/LOGO-CREDITPLAN.png';
 import { Footer } from './App';
 
