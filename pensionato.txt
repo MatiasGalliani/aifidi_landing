@@ -1,0 +1,4 @@
+pensionato done
+l'importo richiesto - pensione netta mensile  done
+ente pensionistico - tipologia di pensione - data di nascita - provincia di residenza done
+nome - cognome - email - telefono - privacy - invia done

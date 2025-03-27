@@ -1,0 +1,8 @@
+- make the thankyoupage for the manual requests DONE
+- make every part of the form mandatory DONE
+- connect form to google sheets SUN
+- connect form to eugenio with simple behavior for fixing appointments MON
+- make the we're sorry page for refusals SUN
+- set the refusals conditions MON
+
+FRONT-END REACT FINISHED ON MARCH 15TH AT 08:20 PM
