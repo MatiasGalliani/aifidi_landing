@@ -57,7 +57,7 @@ export function ChatWidget({ open, setOpen }) {
   };
 
   const handleAutoMessage = () => {
-    sendMessage("Voglio finanziazione per la mia azienda");
+    sendMessage("Voglio finanziamento per la mia azienda");
     setShowInput(true);
   };
 
