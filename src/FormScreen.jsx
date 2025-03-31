@@ -33,6 +33,8 @@ function FormScreen({ onClose, onFormSubmit }) {
   // NUEVOS estados para el dropdown secundario
   const [secondaryDropdownOpen, setSecondaryDropdownOpen] = useState(false)
   const [secondarySelection, setSecondarySelection] = useState(null)
+  const [nomeAzienda, setNomeAzienda] = useState("");
+
 
   // NUEVOS estados para la pagina adicional de "Pubblico"
   const [contractType, setContractType] = useState("")
@@ -40,6 +42,10 @@ function FormScreen({ onClose, onFormSubmit }) {
   const [province, setProvince] = useState("")
   // New state to determine if the device is mobile
   const [isMobile, setIsMobile] = useState(false)
+
+  const [financingScope, setFinancingScope] = useState("");
+  const [financingScopeDropdownOpen, setFinancingScopeDropdownOpen] = useState(false);
+
 
   // Estados de Informazioni Contatto
   const [nome, setNome] = useState("")
@@ -73,6 +79,8 @@ function FormScreen({ onClose, onFormSubmit }) {
 
   // Nuevo estado para almacenar errores de cada paso:
   const [stepErrors, setStepErrors] = useState({})
+  const [requestedAmount, setRequestedAmount] = useState("");
+  const [monthlyValue, setMonthlyValue] = useState("");
 
   // Check viewport width to set isMobile (adjust the px threshold as needed)
   useEffect(() => {
@@ -131,23 +139,14 @@ function FormScreen({ onClose, onFormSubmit }) {
       birthDate,
       province,
       privacyAccepted,
+      financingScope, // Nuevo campo del paso 2
     };
 
-    if (selectedOption === "pensionato") {
-      Object.assign(formData, {
-        pensionAmount,
-        pensioneNetta,
-        entePensionistico,
-        pensioneType,
-      });
-    } else if (selectedOption === "dipendente") {
-      Object.assign(formData, {
-        amountRequested,
-        netSalary,
-        depType,
-        secondarySelection,
-        contractType,
-      });
+    // Si aún necesitas diferenciar entre "Professionista" y "Azienda", puedes agregar datos específicos:
+    if (selectedOption === "Professionista") {
+      // Agrega aquí datos adicionales para Professionista, si fuera necesario.
+    } else if (selectedOption === "Azienda") {
+      // Agrega aquí datos adicionales para Azienda, si fuera necesario.
     }
 
     const endpoint =
@@ -320,9 +319,9 @@ function FormScreen({ onClose, onFormSubmit }) {
             )}
           </motion.div>
         )}
-        {step === 2 && selectedOption === "pensionato" && (
+        {step === 2 && (
           <motion.div
-            key="step2-pensionato"
+            key="step2-financing-scope"
             initial="initial"
             animate="animate"
             exit="exit"
@@ -330,208 +329,51 @@ function FormScreen({ onClose, onFormSubmit }) {
             transition={pageTransition}
             className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
           >
-            <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
-              <button onClick={() => setStep(1)} className="mr-4">
-                <IoIosArrowBack size={32} className="text-black" />
-              </button>
-              <h2 className="text-3xl font-semibold">Inserisci i tuoi dati iniziali</h2>
-            </div>
-            <div className="w-full max-w-md space-y-4">
-              {/* L'importo richiesto */}
-              <div className="flex flex-col">
-                <label className="text-base sm:text-xl font-semibold mb-2">
-                  L'importo richiesto?
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500">€</span>
-                  <input
-                    type="text"
-                    value={pensionAmount}
-                    onChange={(e) => {
-                      setPensionAmount(e.target.value)
-                      setStepErrors({ ...stepErrors, pensionAmount: "" })
-                    }}
-                    className="border pl-10 pr-3 p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
-                  />
-                </div>
-                {stepErrors.pensionAmount && (
-                  <p className="text-red-500 text-sm mt-1">{stepErrors.pensionAmount}</p>
-                )}
-              </div>
-              <div className="flex flex-col">
-                <label className="text-base sm:text-xl font-semibold mb-2">
-                  Pensione netta mensile?
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500">€</span>
-                  <input
-                    type="text"
-                    value={pensioneNetta}
-                    onChange={(e) => {
-                      setPensioneNetta(e.target.value);
-                      setStepErrors({ ...stepErrors, pensioneNetta: "" });
-                    }}
-                    className="border pl-10 pr-3 p-3 w-full rounded-2xl text-base sm:text-lg"
-                  />
-                </div>
-                {pensioneNetta && !isNaN(parseFloat(pensioneNetta)) && parseFloat(pensioneNetta) < 600 && (
-                  <p className="text-red-500 text-lg font-medium mt-4 text-center">
-                    Siamo spiacenti, non possiamo procedere.
-                  </p>
-                )}
-                {stepErrors.pensioneNetta && (
-                  <p className="text-red-500 text-sm mt-1">{stepErrors.pensioneNetta}</p>
-                )}
-              </div>
-              {pensioneNetta && !isNaN(parseFloat(pensioneNetta)) && parseFloat(pensioneNetta) >= 600 && (
-                <div className="flex justify-center">
-                  <button
-                    className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
-                    onClick={() => {
-                      const errors = validateStep2Pensionato();
-                      if (Object.keys(errors).length > 0) {
-                        setStepErrors(errors);
-                        return;
-                      }
-                      setStepErrors({});
-                      setStep(3);
-                    }}
-                  >
-                    Avanti
-                  </button>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )}
-        {step === 2 && selectedOption === "dipendente" && (
-          <motion.div
-            key="step2-dipendente"
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}
-            className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
-          >
-            {/* Botón para volver */}
             <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
               <button onClick={() => setStep(1)} className="mr-4">
                 <IoIosArrowBack size={32} className="text-black" />
               </button>
               <h2 className="text-3xl font-semibold">
-                Inserisci i tuoi dati iniziali
+                Scopo del finanziamento
               </h2>
             </div>
-            <div className="w-full max-w-md space-y-4">
-              <div className="flex flex-col">
-                <label className="text-base sm:text-xl font-semibold mb-2">
-                  L'importo richiesto?
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500">€</span>
-                  <input
-                    type="text"
-                    value={amountRequested}
-                    onChange={(e) => {
-                      setAmountRequested(e.target.value)
-                      setStepErrors({ ...stepErrors, amountRequested: "" })
-                    }}
-                    className="border pl-10 pr-3 p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
-                  />
-                </div>
-                {stepErrors.amountRequested && (
-                  <p className="text-red-500 text-sm mt-1">{stepErrors.amountRequested}</p>
-                )}
-              </div>
-              <div className="flex flex-col">
-                <label className="text-base sm:text-xl font-semibold mb-2">
-                  Stipendio netto mensile?
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500">€</span>
-                  <input
-                    type="text"
-                    value={netSalary}
-                    onChange={(e) => {
-                      setNetSalary(e.target.value)
-                      setStepErrors({ ...stepErrors, netSalary: "" })
-                    }}
-                    className="border pl-10 pr-3 p-3 sm:p-4 w-full rounded-2xl text-base sm:text-lg"
-                  />
-                </div>
-                {stepErrors.netSalary && (
-                  <p className="text-red-500 text-sm mt-1">{stepErrors.netSalary}</p>
-                )}
-              </div>
-            </div>
-            {netSalary && parseFloat(netSalary) < 600 && (
-              <p className="text-red-500 text-lg font-medium mt-6 text-center">
-                Siamo spiacenti, non possiamo procedere.
-              </p>
-            )}
-
-            {parseFloat(netSalary) >= 600 && !isNaN(parseFloat(netSalary)) && (
-              <button
-                className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
-                onClick={() => {
-                  const errors = validateStep2Dipendente();
-                  if (Object.keys(errors).length > 0) {
-                    setStepErrors(errors);
-                    return;
-                  }
-                  setStepErrors({});
-                  setStep(3);
-                }}
-              >
-                Avanti
-              </button>
-            )}
-          </motion.div>
-        )}
-        {step === 3 && selectedOption === "dipendente" && (
-          <motion.div
-            key="step3-dipendente"
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}
-            className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
-          >
-            <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
-              <button onClick={() => setStep(2)} className="mr-4">
-                <IoIosArrowBack size={32} className="text-black" />
-              </button>
-              <h2 className="text-3xl font-semibold">Che tipo di dipendente sei</h2>
-            </div>
-
-            {/* Dropdown principal: Seleziona tipo di dipendente */}
-            <div className="w-full max-w-md mb-4">
+            <div className="w-full max-w-md">
               <div
-                onClick={() => {
-                  setDropdownOpen(!dropdownOpen)
-                  setSecondaryDropdownOpen(false)
-                  setStepErrors({ ...stepErrors, depType: "" })
-                }}
+                onClick={() => setFinancingScopeDropdownOpen(!financingScopeDropdownOpen)}
                 className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
               >
                 <span className="text-xl font-semibold">
-                  {depType ? depType : "Seleziona tipo di dipendente"}
+                  {financingScope ? financingScope : "Seleziona"}
                 </span>
-                <IoIosArrowDown className={`transition-transform duration-300 ${dropdownOpen ? "rotate-90" : ""}`} />
+                <IoIosArrowDown
+                  className={`transition-transform duration-300 ${financingScopeDropdownOpen ? "rotate-90" : ""}`}
+                />
               </div>
-              {dropdownOpen && (
-                <div className="mt-2 border border-gray-300 rounded-lg shadow-lg">
-                  {["Pubblico", "Statale", "Parapubblico", "Privato"].map(option => (
+              {financingScopeDropdownOpen && (
+                <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                  {[
+                    "Anticipo Fatture",
+                    "Factoring",
+                    "Finanziamenti per Investimenti",
+                    "Consolidamento Passività verso le altre Banche",
+                    "Finanziamenti per Imprenditori Agricoli",
+                    "Finanziamenti per Startup",
+                    "Affidamenti a Breve Termine",
+                    "Finanziamenti Chirografari",
+                    "Finanziamenti per Fotovoltaico",
+                    "Leasing (Strumentale, Immobiliare, Nautico)",
+                    "Noleggio Operativo",
+                    "Finanziamenti per sostegno Liquidità",
+                    "Finanza Agevolata",
+                    "Mutui Edilizi",
+                    "Fideiussioni Commerciali",
+                    "Altro"
+                  ].map((option) => (
                     <button
                       key={option}
                       onClick={() => {
-                        setDepType(option)
-                        setDropdownOpen(false)
-                        // Si cambia tipo, se non è Privato se limpia el subtipo
-                        if (option !== "Privato") setSecondarySelection(null)
-                        setStepErrors({ ...stepErrors, depType: "" })
+                        setFinancingScope(option);
+                        setFinancingScopeDropdownOpen(false);
                       }}
                       className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                     >
@@ -540,81 +382,20 @@ function FormScreen({ onClose, onFormSubmit }) {
                   ))}
                 </div>
               )}
-              {stepErrors.depType && (
-                <p className="text-red-500 text-sm mt-1">{stepErrors.depType}</p>
-              )}
             </div>
-
-            {/* Dropdown secundario: Seleziona il sottotipo, obligatorio si es Privato */}
-            {depType === "Privato" && (
-              <div className="w-full max-w-md mb-4">
-                <div
-                  onClick={() => {
-                    setSecondaryDropdownOpen(!secondaryDropdownOpen)
-                    setStepErrors({ ...stepErrors, secondarySelection: "" })
-                  }}
-                  className="border p-4 rounded-2xl cursor-pointer flex justify-between items-center"
-                >
-                  <span className="text-xl font-semibold">
-                    {secondarySelection ? secondarySelection : "Seleziona il sottotipo"}
-                  </span>
-                  <IoIosArrowDown className={`transition-transform duration-300 ${secondaryDropdownOpen ? "rotate-90" : ""}`} />
-                </div>
-                {secondaryDropdownOpen && (
-                  <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-32 overflow-y-auto">
-                    {secondaryOptionsMapping[depType].map(subOption => (
-                      <button
-                        key={subOption}
-                        onClick={() => {
-                          setSecondarySelection(subOption)
-                          setSecondaryDropdownOpen(false)
-                          setStepErrors({ ...stepErrors, secondarySelection: "" })
-                        }}
-                        className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                      >
-                        {subOption}
-                      </button>
-                    ))}
-                  </div>
-                )}
-                {stepErrors.secondarySelection && (
-                  <p className="text-red-500 text-sm mt-1">{stepErrors.secondarySelection}</p>
-                )}
-              </div>
-            )}
-
-            {depType === "Privato" && secondarySelection === "Ditta Individuale" ? (
-              <p className="text-red-500 text-lg font-medium mt-6 text-center">
-                Siamo spiacenti, non possiamo procedere con una Ditta Individuale.
-              </p>
-            ) : (
+            <div className="flex justify-center mt-8">
               <button
-                className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300"
-                onClick={() => {
-                  const errors = {};
-                  if (!depType) errors.depType = "Campo obbligatorio";
-                  if (depType === "Privato" && !secondarySelection)
-                    errors.secondarySelection = "Campo obbligatorio";
-                  if (Object.keys(errors).length > 0) {
-                    setStepErrors(errors);
-                    return;
-                  }
-                  setStepErrors({});
-                  if (depType === "Privato") {
-                    setStep(6);
-                  } else {
-                    setStep(4);
-                  }
-                }}
+                className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl"
+                onClick={() => setStep(3)}
               >
                 Avanti
               </button>
-            )}
+            </div>
           </motion.div>
         )}
-        {step === 3 && selectedOption === "pensionato" && (
+        {step === 3 && (
           <motion.div
-            key="step3-pensionato"
+            key="step3-common"
             initial="initial"
             animate="animate"
             exit="exit"
@@ -622,137 +403,36 @@ function FormScreen({ onClose, onFormSubmit }) {
             transition={pageTransition}
             className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
           >
-            {/* Cabecera */}
+            {/* Cabecera con flecha */}
             <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
               <button onClick={() => setStep(2)} className="mr-4">
                 <IoIosArrowBack size={32} className="text-black" />
               </button>
-              <h2 className="text-3xl font-semibold">Inserisci i tuoi dati iniziali</h2>
+              <h2 className="text-3xl font-semibold">Nome Azienda</h2>
             </div>
+            {/* Input para Nome Azienda */}
             <div className="w-full max-w-md space-y-4">
-              {/* Ente pensionistico */}
               <div className="flex flex-col">
                 <label className="text-base sm:text-xl font-semibold mb-2">
-                  Ente pensionistico
+                  Nome Azienda
                 </label>
-                <div
-                  onClick={() => {
-                    setEntePensionisticoDropdownOpen(!entePensionisticoDropdownOpen);
-                    setTipologiaDropdownOpen(false); // cierra el otro dropdown
-                  }}
-                  className="border p-3 rounded-2xl cursor-pointer flex justify-between items-center"
-                >
-                  <span className="text-xl font-semibold">
-                    {entePensionistico
-                      ? entePensionistico === "italiana"
-                        ? "Pensione italiana"
-                        : "Pensione estera"
-                      : "Seleziona"}
-                  </span>
-                  <IoIosArrowDown
-                    className={`transition-transform duration-300 ${entePensionisticoDropdownOpen ? "rotate-90" : ""}`}
-                  />
-                </div>
-                {entePensionisticoDropdownOpen && (
-                  <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto">
-                    <button
-                      onClick={() => {
-                        setEntePensionistico("italiana");
-                        setEntePensionisticoDropdownOpen(false);
-                      }}
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                    >
-                      Pensione italiana
-                    </button>
-                    <button
-                      onClick={() => {
-                        setEntePensionistico("estera");
-                        setEntePensionisticoDropdownOpen(false);
-                      }}
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                    >
-                      Pensione estera
-                    </button>
-                  </div>
-                )}
-                {stepErrors.entePensionistico && (
-                  <p className="text-red-500 text-sm mt-1">{stepErrors.entePensionistico}</p>
-                )}
+                <input
+                  type="text"
+                  placeholder="Inserisci il nome dell'azienda"
+                  value={nomeAzienda}
+                  onChange={(e) => setNomeAzienda(e.target.value)}
+                  className="border p-4 rounded-2xl text-base sm:text-lg"
+                />
               </div>
-
-              {entePensionistico !== "estera" && (
-                <div className="flex flex-col mt-4">
-                  <label className="text-base sm:text-xl font-semibold mb-2">
-                    Tipologia di pensione
-                  </label>
-                  <div
-                    onClick={() => {
-                      setTipologiaDropdownOpen(!tipologiaDropdownOpen);
-                      setEntePensionisticoDropdownOpen(false); // cierra el otro dropdown
-                    }}
-                    className="border p-3 rounded-2xl cursor-pointer flex justify-between items-center"
-                  >
-                    <span className="text-xl font-semibold">
-                      {pensioneType ? pensioneType : "Seleziona"}
-                    </span>
-                    <IoIosArrowDown className={`transition-transform duration-300 ${tipologiaDropdownOpen ? "rotate-90" : ""}`} />
-                  </div>
-                  {tipologiaDropdownOpen && (
-                    <div className="mt-2 border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto">
-                      {[
-                        "Vecchiaia",
-                        "Anzianità contributiva",
-                        "Reversibilità",
-                        "Invalidità ordinaria",
-                        "Pensione con residenza estera",
-                        "Invalidità civile",
-                        "Pensione sociale",
-                        "APe social"
-                      ].map(option => (
-                        <button
-                          key={option}
-                          onClick={() => {
-                            setPensioneType(option);
-                            setTipologiaDropdownOpen(false);
-                          }}
-                          className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-base"
-                        >
-                          {option}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                  {stepErrors.pensioneType && (
-                    <p className="text-red-500 text-sm mt-1">{stepErrors.pensioneType}</p>
-                  )}
-                </div>
-              )}
-
-              {/* Condizione finale: messaggio o bottone */}
-              {entePensionistico === "estera" ? (
-                <p className="text-red-500 text-lg font-medium mt-6 text-center">
-                  Siamo spiacenti, non possiamo procedere con una pensione estera.
-                </p>
-              ) : (
-                <div className="flex justify-center">
-                  <button
-                    className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl mt-8"
-                    onClick={() => {
-                      const errors = {};
-                      if (!entePensionistico) errors.entePensionistico = "Campo obbligatorio";
-                      if (!pensioneType) errors.pensioneType = "Campo obbligatorio";
-                      if (Object.keys(errors).length > 0) {
-                        setStepErrors(errors);
-                        return;
-                      }
-                      setStepErrors({});
-                      setStep(4); // prossimo step
-                    }}
-                  >
-                    Avanti
-                  </button>
-                </div>
-              )}
+            </div>
+            {/* Botón Avanti */}
+            <div className="flex justify-center mt-8">
+              <button
+                className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl"
+                onClick={() => setStep(4)}
+              >
+                Avanti
+              </button>
             </div>
           </motion.div>
         )}
