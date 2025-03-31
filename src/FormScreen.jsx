@@ -50,7 +50,6 @@ function FormScreen({ onClose, onFormSubmit }) {
   const [cittaSedeLegale, setCittaSedeLegale] = useState("");
   const [cittaSedeOperativa, setCittaSedeOperativa] = useState("");
 
-
   // Check viewport width to set isMobile (adjust the px threshold as needed)
   useEffect(() => {
     const checkIsMobile = () => setIsMobile(window.innerWidth <= 768)
