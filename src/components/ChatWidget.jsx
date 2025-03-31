@@ -57,7 +57,7 @@ export function ChatWidget({ open, setOpen }) {
   };
 
   const handleAutoMessage = () => {
-    sendMessage("Ho domande sulla cessione del quinto");
+    sendMessage("Voglio finanziazione per la mia azienda");
     setShowInput(true);
   };
 
