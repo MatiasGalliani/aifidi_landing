@@ -117,7 +117,7 @@ export function ChatWidget({ open, setOpen }) {
                 onClick={handleAutoMessage}
                 className="w-full bg-gradient-to-r from-blue-100 to-blue-300 text-black py-3 rounded-full hover:bg-sky-500 transition-colors duration-500"
               >
-                Ho domande sulla cessione del quinto
+                Voglio finanziamento per la mia azienda
               </button>
             ) : (
               <form onSubmit={handleSubmit} className="flex items-center">
