@@ -45,12 +45,6 @@ function FormScreen({ onClose, onFormSubmit }) {
   // Estado para aceptar la Privacy Policy
   const [privacyAccepted, setPrivacyAccepted] = useState(false)
 
-
-  // NUEVOS estados para el flujo "Dipendente Privato"
-  const [over12Months, setOver12Months] = useState("")
-  const [numEmployees, setNumEmployees] = useState("")
-
-
   // Nuevo estado para almacenar errores de cada paso:
   const [stepErrors, setStepErrors] = useState({})
   const [cittaSedeLegale, setCittaSedeLegale] = useState("");
