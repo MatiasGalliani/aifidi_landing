@@ -275,7 +275,7 @@ function FormScreen({ onClose, onFormSubmit }) {
               </div>
               <div className="flex justify-center">
                 <h2 className="text-3xl font-semibold">
-                  Qual è la tua situazione lavorativa?
+                  Qual è la tua situazione?
                 </h2>
               </div>
               <div>{/* Espacio vacío */}</div>
@@ -283,31 +283,31 @@ function FormScreen({ onClose, onFormSubmit }) {
             <div className="flex flex-col gap-6 w-full max-w-lg">
               <div
                 className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-4 transition"
-                onClick={() => setSelectedOption("pensionato")}
+                onClick={() => setSelectedOption("Professionista")}
               >
                 <div
                   className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center mr-4 transition 
-                    ${selectedOption === "pensionato" ? "bg-blue-700 border-blue-700" : "bg-white border-gray-300"}`}
+                    ${selectedOption === "Professionista" ? "bg-blue-700 border-blue-700" : "bg-white border-gray-300"}`}
                   onClick={(e) => {
                     e.stopPropagation()
-                    setSelectedOption("pensionato")
+                    setSelectedOption("Professionista")
                   }}
                 ></div>
-                <span className="text-xl font-semibold">Pensionato</span>
+                <span className="text-xl font-semibold">Professionista</span>
               </div>
               <div
                 className="flex items-center bg-white border border-gray-300 hover:border-gray-600 cursor-pointer rounded-2xl p-4 transition"
-                onClick={() => setSelectedOption("dipendente")}
+                onClick={() => setSelectedOption("Azienda")}
               >
                 <div
                   className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center mr-4 transition 
-                    ${selectedOption === "dipendente" ? "bg-blue-700 border-blue-700" : "bg-white border-gray-300"}`}
+                    ${selectedOption === "Azienda" ? "bg-blue-700 border-blue-700" : "bg-white border-gray-300"}`}
                   onClick={(e) => {
                     e.stopPropagation()
-                    setSelectedOption("dipendente")
+                    setSelectedOption("Azienda")
                   }}
                 ></div>
-                <span className="text-xl font-semibold">Dipendente</span>
+                <span className="text-xl font-semibold">Azienda</span>
               </div>
             </div>
             {selectedOption && (
