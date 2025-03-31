@@ -30,9 +30,6 @@ function FormScreen({ onClose, onFormSubmit }) {
 
   const [nomeAzienda, setNomeAzienda] = useState("");
 
-
-  // NUEVOS estados para la pagina adicional de "Pubblico"
-  const [province, setProvince] = useState("")
   // New state to determine if the device is mobile
   const [isMobile, setIsMobile] = useState(false)
 
@@ -49,21 +46,13 @@ function FormScreen({ onClose, onFormSubmit }) {
   const [privacyAccepted, setPrivacyAccepted] = useState(false)
 
 
-  // NUEVOS estados para el flujo "Dipendente"
-  const [amountRequested, setAmountRequested] = useState("")
-  const [netSalary, setNetSalary] = useState("")
-
   // NUEVOS estados para el flujo "Dipendente Privato"
   const [over12Months, setOver12Months] = useState("")
   const [numEmployees, setNumEmployees] = useState("")
 
-  // Agrega este estado al inicio del componente junto a los demás:
-  const [tipologiaDropdownOpen, setTipologiaDropdownOpen] = useState(false)
 
   // Nuevo estado para almacenar errores de cada paso:
   const [stepErrors, setStepErrors] = useState({})
-  const [requestedAmount, setRequestedAmount] = useState("");
-  const [monthlyValue, setMonthlyValue] = useState("");
   const [cittaSedeLegale, setCittaSedeLegale] = useState("");
   const [cittaSedeOperativa, setCittaSedeOperativa] = useState("");
 
@@ -76,12 +65,6 @@ function FormScreen({ onClose, onFormSubmit }) {
     return () => window.removeEventListener("resize", checkIsMobile)
   }, [])
 
-  const secondaryOptionsMapping = {
-    "Pubblico": ["Ospedale", "Comune", "Medico convenzionato", "Altro"],
-    "Statale": ["Carabinieri", "Guardia di finanza", "Vigili del Fuoco", "Esercito", "Marina Militare", "Aeronautica", "Polizia", "Scuole", "Università", "Altro"],
-    "Parapubblico": ["Poste Italiane", "Gruppo FFSS", "Gruppo ANAS", "Altro"],
-    "Privato": ["SPA", "SRL", "Cooperativa", "Ditta Individuale"]
-  }
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 3000)
