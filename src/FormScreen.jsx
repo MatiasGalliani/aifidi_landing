@@ -26,19 +26,12 @@ const pageTransition = { duration: 0.5, ease: "easeInOut" }
 function FormScreen({ onClose, onFormSubmit }) {
   const [loading, setLoading] = useState(true)
   const [step, setStep] = useState(1)
-  const [selectedOption, setSelectedOption] = useState(null) // "pensionato" o "dipendente"
-  const [depType, setDepType] = useState(null) // Opción del dropdown principal
-  const [dropdownOpen, setDropdownOpen] = useState(false) // Controla el desplegable principal
+  const [selectedOption, setSelectedOption] = useState(null)
 
-  // NUEVOS estados para el dropdown secundario
-  const [secondaryDropdownOpen, setSecondaryDropdownOpen] = useState(false)
-  const [secondarySelection, setSecondarySelection] = useState(null)
   const [nomeAzienda, setNomeAzienda] = useState("");
 
 
   // NUEVOS estados para la pagina adicional de "Pubblico"
-  const [contractType, setContractType] = useState("")
-  const [birthDate, setBirthDate] = useState("1968-05-23")
   const [province, setProvince] = useState("")
   // New state to determine if the device is mobile
   const [isMobile, setIsMobile] = useState(false)
@@ -55,9 +48,6 @@ function FormScreen({ onClose, onFormSubmit }) {
   // Estado para aceptar la Privacy Policy
   const [privacyAccepted, setPrivacyAccepted] = useState(false)
 
-  // NUEVOS estados para el dropdown de contrato y provincia
-  const [contractDropdownOpen, setContractDropdownOpen] = useState(false);
-  const [provinceDropdownOpen, setProvinceDropdownOpen] = useState(false);
 
   // NUEVOS estados para el flujo "Dipendente"
   const [amountRequested, setAmountRequested] = useState("")
@@ -66,13 +56,6 @@ function FormScreen({ onClose, onFormSubmit }) {
   // NUEVOS estados para el flujo "Dipendente Privato"
   const [over12Months, setOver12Months] = useState("")
   const [numEmployees, setNumEmployees] = useState("")
-
-  // NUEVOS estados para el flujo "Pensionato"
-  const [pensionAmount, setPensionAmount] = useState("")
-  const [pensioneNetta, setPensioneNetta] = useState("")
-  const [entePensionistico, setEntePensionistico] = useState("");
-  const [pensioneType, setPensioneType] = useState("");
-  const [entePensionisticoDropdownOpen, setEntePensionisticoDropdownOpen] = useState(false);
 
   // Agrega este estado al inicio del componente junto a los demás:
   const [tipologiaDropdownOpen, setTipologiaDropdownOpen] = useState(false)
@@ -105,23 +88,6 @@ function FormScreen({ onClose, onFormSubmit }) {
     return () => clearTimeout(timer)
   }, [])
 
-  // Ejemplo de validación en cada paso (debes replicarla en cada uno)
-  const validateStep2Pensionato = () => {
-    const errors = {};
-    const errorMsg = validateNetValue(pensioneNetta); // pensioneNetta es el estado para ese input
-    if (errorMsg) {
-      errors.pensioneNetta = errorMsg;
-    }
-    return errors;
-  };
-
-  // Agregar la validación para il flusso "dipendente"
-  const validateStep2Dipendente = () => {
-    const errors = {}
-    if (!amountRequested.trim()) errors.amountRequested = "Campo obbligatorio"
-    if (!netSalary.trim()) errors.netSalary = "Campo obbligatorio"
-    return errors
-  }
 
   const validateStep5Contatto = () => {
     const errors = {}
@@ -176,8 +142,6 @@ function FormScreen({ onClose, onFormSubmit }) {
     }
   };
 
-
-
   if (loading) {
     return (
       <motion.div
@@ -193,28 +157,6 @@ function FormScreen({ onClose, onFormSubmit }) {
       </motion.div>
     )
   }
-
-  const validatePensioneNetta = () => {
-    const errors = {};
-    const errorMsg = validateNetValue(pensioneNetta);
-    if (errorMsg) {
-      errors.pensioneNetta = errorMsg;
-    }
-    return errors;
-  };
-
-  // Función de validación para el flujo de Dipendente
-  const validateStipendioNetto = () => {
-    const errors = {};
-    const errorMsg = validateNetValue(netSalary);
-    if (errorMsg) {
-      errors.netSalary = errorMsg;
-    }
-    return errors;
-  };
-
-  const netValueError = validateNetValue(pensioneNetta);
-  const netSalaryError = validateNetValue(netSalary);
 
   const validateStep6Privato = () => {
     const errors = {};
