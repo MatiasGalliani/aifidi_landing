@@ -81,23 +81,15 @@ function FormScreen({ onClose, onFormSubmit }) {
       cognome,
       mail,
       telefono,
-      birthDate,
-      province,
+      financingScope,
+      nomeAzienda,
+      cittaSedeLegale,
+      cittaSedeOperativa,
+      importoRichiesto,
       privacyAccepted,
-      financingScope, // Nuevo campo del paso 2
     };
 
-    // Si aún necesitas diferenciar entre "Professionista" y "Azienda", puedes agregar datos específicos:
-    if (selectedOption === "Professionista") {
-      // Agrega aquí datos adicionales para Professionista, si fuera necesario.
-    } else if (selectedOption === "Azienda") {
-      // Agrega aquí datos adicionales para Azienda, si fuera necesario.
-    }
-
-    const endpoint =
-      selectedOption === "pensionato"
-        ? "https://backend-richiedidiessereconttato-production.up.railway.app/pensionato"
-        : "https://backend-richiedidiessereconttato-production.up.railway.app/dipendente";
+    const endpoint = "https://backend-richiedidiessereconttato-production.up.railway.app/aifidiform";
 
     try {
       const response = await fetch(endpoint, {
