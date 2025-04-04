@@ -126,46 +126,6 @@ function FormScreen({ onClose, onFormSubmit }) {
     )
   }
 
-  const validateStep6Privato = () => {
-    const errors = {};
-
-    if (!over12Months) {
-      errors.over12Months = "Campo obbligatorio";
-    } else if (over12Months === "no") {
-      errors.over12Months = "Purtroppo non possiamo procedere con meno di 12 mesi.";
-    }
-
-    if (!numEmployees.trim()) {
-      errors.numEmployees = "Campo obbligatorio";
-    } else if (!/^\d+$/.test(numEmployees)) {
-      errors.numEmployees = "Deve essere un numero valido";
-    } else if (parseInt(numEmployees) < 3) {
-      errors.numEmployees = "Purtroppo non possiamo procedere.";
-    }
-
-    return errors;
-  };
-
-  const validateStep4Dipendente = () => {
-    const errors = {};
-
-    if (!contractType) {
-      errors.contractType = "Campo obbligatorio";
-    } else if (contractType === "indeterminato") {
-      errors.contractType = "Siamo spiacenti, non possiamo procedere con contratto indeterminato.";
-    }
-
-    if (!birthDate.trim() && contractType !== "indeterminato") {
-      errors.birthDate = "Campo obbligatorio";
-    }
-
-    if (!province && contractType !== "indeterminato") {
-      errors.province = "Campo obbligatorio";
-    }
-
-    return errors;
-  };
-
   return (
     <div className={`relative min-h-screen overflow-y-auto ${!isMobile ? "hide-scroll" : ""} overflow-x-hidden`}>
       <AnimatePresence exitBeforeEnter>
