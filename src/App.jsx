@@ -161,50 +161,33 @@ function ContactPage({ onBack, onSubmit }) {
     setSubmissionLoading(true);
 
     // Construye el objeto con las claves que espera el Apps Script.
-    const data = {
-      nome: nome,         // Primer valor: Nombre
-      cognome: cognome,   // Segundo valor: Apellido
-      email: mail,        // Tercer valor: Email
-      telefono: telefono  // Cuarto valor: Teléfono
+    const payload = {
+      datos: [nome, cognome, mail, telefono]
     };
-
-    console.log("Datos a enviar:", data);
-
+  
+    console.log("Datos a enviar:", payload);
+  
     try {
-      await fetch("https://script.google.com/macros/s/AKfycbzu0BMWs416ubQ8eH3g3bcY6eqkWjL0-uHldfGIkOce21YmSAPCT18CicAqQ5VyvxKF2g/exec", {
+      const response = await fetch("https://backend-richiedidiessereconttato-production.up.railway.app/manuale_aifidi", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload)
       });
-
-      // Dado que usamos "no-cors", asumimos que se envió correctamente.
-      setTimeout(() => {
-        setSubmissionLoading(false);
-        onSubmit(); // Redirige a la ThankYouPage
-      }, 2000);
+  
+      if (!response.ok) {
+        throw new Error("Error en la respuesta del servidor");
+      }
+  
+      // Si la respuesta es exitosa, detenemos el loading y llamamos a onSubmit.
+      setSubmissionLoading(false);
+      onSubmit();
     } catch (error) {
       console.error("Error en la petición:", error);
       setSubmissionLoading(false);
     }
   };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-white rounded-2xl">
-        <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-700 border-t-transparent"></div>
-      </div>
-    );
-  }
-
-  if (submissionLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-white rounded-2xl">
-        <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-700 border-t-transparent"></div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white px-4 rounded-2xl">
