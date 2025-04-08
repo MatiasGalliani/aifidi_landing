@@ -89,7 +89,7 @@ function FormScreen({ onClose, onFormSubmit }) {
       privacyAccepted,
     };
 
-    const endpoint = "https://backend-richiedidiessereconttato-production.up.railway.app/aifidiform";
+    const endpoint = "https://backend-richiedidiessereconttato-production.up.railway.app/aifidi";
 
     try {
       const response = await fetch(endpoint, {
