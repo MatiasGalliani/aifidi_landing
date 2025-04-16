@@ -584,7 +584,6 @@ function MainApp() {
                 <div
                   onClick={() => {
                     setShowContactFields(true);
-                    setChatOpen(true); // Opens the ChatWidget via Eugenio’s button
                   }}
                   className="w-full md:flex-1 cursor-pointer bg-white hover:bg-gray-100 text-black px-8 py-3 text-xl border border-gray-400 transform transition-all duration-500 hover:scale-105 hover:shadow-lg flex items-center justify-between rounded-2xl"
                 >
