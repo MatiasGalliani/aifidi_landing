@@ -76,6 +76,17 @@ function FormScreen({ onClose, onFormSubmit }) {
   }
 
   const handleSubmit = async () => {
+    // Activa la pantalla de carga inmediatamente
+    setLoading(true);
+
+    const errors = validateStep5Contatto();
+    if (Object.keys(errors).length > 0) {
+      setStepErrors(errors);
+      // Si se detectan errores, desactivamos la carga para que el usuario pueda corregirlos
+      setLoading(false);
+      return;
+    }
+
     const formData = {
       nome,
       cognome,
