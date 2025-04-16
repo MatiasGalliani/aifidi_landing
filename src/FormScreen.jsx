@@ -76,6 +76,9 @@ function FormScreen({ onClose, onFormSubmit }) {
   }
 
   const handleSubmit = async () => {
+    // Activar la pantalla de carga inmediatamente
+    setLoading(true);
+
     const formData = {
       nome,
       cognome,
@@ -107,6 +110,8 @@ function FormScreen({ onClose, onFormSubmit }) {
       onFormSubmit();
     } catch (error) {
       console.error("Errore:", error);
+      // Si ocurre un error, podemos desactivar loading para permitir otro intento
+      setLoading(false);
     }
   };
 
@@ -529,7 +534,8 @@ function FormScreen({ onClose, onFormSubmit }) {
               </div>
             </div>
             <button
-              className="mt-8 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300 transition-all duration-500 hover:scale-105 hover:shadow-lg animate-fadeIn"
+              disabled={loading}
+              className={`mt-8 bg-blue-700 text-white px-4 py-2 text-lg rounded-2xl border border-gray-300 transition-all duration-500 animate-fadeIn ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-800 hover:scale-105 hover:shadow-lg"}`}
               onClick={() => {
                 const errors = validateStep5Contatto()
                 if (Object.keys(errors).length > 0) {
@@ -542,6 +548,7 @@ function FormScreen({ onClose, onFormSubmit }) {
             >
               Invia Questa Richiesta
             </button>
+
           </motion.div>
         )}
       </AnimatePresence>
