@@ -36,6 +36,8 @@ function FormScreen({ onClose, onFormSubmit }) {
   const [financingScope, setFinancingScope] = useState("");
   const [financingScopeDropdownOpen, setFinancingScopeDropdownOpen] = useState(false);
   const [importoRichiesto, setImportoRichiesto] = useState("");
+  const [partitaIVA, setPartitaIVA] = useState("");
+  const [partitaIVAError, setPartitaIVAError] = useState("");
 
   // Estados de Informazioni Contatto
   const [nome, setNome] = useState("")
@@ -75,6 +77,22 @@ function FormScreen({ onClose, onFormSubmit }) {
     return errors
   }
 
+  const validatePartitaIVA = (value) => {
+    if (financingScope === "Finanziamenti per Startup") {
+      if (!value.trim()) {
+        return "Campo obbligatorio";
+      }
+      if (!/^\d{11}$/.test(value)) {
+        return "La Partita IVA deve essere composta da 11 numeri";
+      }
+    } else {
+      if (value && !/^\d{11}$/.test(value)) {
+        return "La Partita IVA deve essere composta da 11 numeri";
+      }
+    }
+    return null;
+  };
+
   const handleSubmit = async () => {
     // Activa la pantalla de carga inmediatamente
     setLoading(true);
@@ -98,9 +116,10 @@ function FormScreen({ onClose, onFormSubmit }) {
       cittaSedeOperativa,
       importoRichiesto,
       privacyAccepted,
+      partitaIVA: partitaIVA || null, // Ensure it's null if empty
     };
 
-    const endpoint = "https://backend-richiedidiessereconttato-production.up.railway.app/aifidi";
+    const endpoint = "https://accelera-crm-production.up.railway.app/api/forms/aifidi";
 
     try {
       const response = await fetch(endpoint, {
@@ -111,13 +130,19 @@ function FormScreen({ onClose, onFormSubmit }) {
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error("Errore nella richiesta");
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || "Errore nella richiesta");
+      }
 
       const result = await response.json();
       console.log("Dati inviati:", result);
       onFormSubmit();
     } catch (error) {
       console.error("Errore:", error);
+      setLoading(false);
+      // You might want to show an error message to the user here
+      alert("Si è verificato un errore durante l'invio del form. Per favore riprova più tardi.");
     }
   };
 
@@ -270,7 +295,67 @@ function FormScreen({ onClose, onFormSubmit }) {
             <div className="flex justify-center mt-8">
               <button
                 className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl"
-                onClick={() => setStep(3)}
+                onClick={() => {
+                  setStep(2.5);
+                }}
+              >
+                Avanti
+              </button>
+            </div>
+          </motion.div>
+        )}
+        {step === 2.5 && (
+          <motion.div
+            key="step2.5-partita-iva"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}
+            className="absolute inset-0 flex flex-col items-center justify-center bg-white px-4 rounded-2xl"
+          >
+            <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
+              <button onClick={() => setStep(2)} className="mr-4">
+                <IoIosArrowBack size={32} className="text-black" />
+              </button>
+              <h2 className="text-3xl font-semibold">Partita IVA</h2>
+            </div>
+            <div className="w-full max-w-md space-y-4">
+              <div className="flex flex-col">
+                <label className="text-base sm:text-xl font-semibold mb-2">
+                  Partita IVA {financingScope === "Finanziamenti per Startup" && <span className="text-red-500">*</span>}
+                </label>
+                <input
+                  type="text"
+                  placeholder="Inserisci la Partita IVA (11 numeri)"
+                  value={partitaIVA}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, '').slice(0, 11);
+                    setPartitaIVA(value);
+                    const error = validatePartitaIVA(value);
+                    setPartitaIVAError(error);
+                  }}
+                  className="border p-4 rounded-2xl text-base sm:text-lg"
+                />
+                {partitaIVAError && (
+                  <p className="text-red-500 text-sm mt-1">{partitaIVAError}</p>
+                )}
+                {financingScope !== "Finanziamenti per Startup" && (
+                  <p className="text-gray-500 text-sm mt-1">Campo opzionale</p>
+                )}
+              </div>
+            </div>
+            <div className="flex justify-center mt-8">
+              <button
+                className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 text-xl rounded-2xl"
+                onClick={() => {
+                  const error = validatePartitaIVA(partitaIVA);
+                  if (error) {
+                    setPartitaIVAError(error);
+                    return;
+                  }
+                  setStep(3);
+                }}
               >
                 Avanti
               </button>
@@ -289,7 +374,7 @@ function FormScreen({ onClose, onFormSubmit }) {
           >
             {/* Cabecera con flecha */}
             <div className="flex items-center w-full max-w-xl mb-8 pl-4 md:pl-16">
-              <button onClick={() => setStep(2)} className="mr-4">
+              <button onClick={() => setStep(2.5)} className="mr-4">
                 <IoIosArrowBack size={32} className="text-black" />
               </button>
               <h2 className="text-3xl font-semibold">Nome Azienda</h2>

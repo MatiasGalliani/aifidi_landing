@@ -10,7 +10,6 @@ import { Helmet } from "react-helmet-async";
 import ThankYouPage from './BookingPage'
 import FormScreen from './FormScreen'
 import { motion } from "framer-motion";
-import ChatWidget from './components/ChatWidget'
 
 function HeroWave() {
   return (
@@ -479,7 +478,7 @@ function MainApp() {
                   Rispondi a poche domande per ricevere il tuo preventivo personalizzato.
                 </p>
                 <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
-                  <div className="flex flex-col space-y-4">
+                  <div className="flex flex-col space-y-4 mt-6">
                     {/* Box para iniciar el formulario */}
                     <div
                       className="relative bg-blue-800 w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform transition-all duration-500 hover:scale-105 hover:shadow-lg"
@@ -490,23 +489,6 @@ function MainApp() {
                       </span>
                       <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
                         <FaArrowRight className="text-sm text-blue-800" />
-                      </div>
-                    </div>
-                    <p className="flex justify-center text-lg text-gray-500 animate-fadeIn">
-                      Oppure
-                    </p>
-                    {/* Box para enlace de agente */}
-                    <div>
-                      <div
-                        className="relative bg-white w-full sm:w-[90%] md:w-[1000px] h-16 cursor-pointer border border-gray-400 hover:border-gray-700 rounded-2xl flex items-center justify-center px-4 transform transition-all duration-500 hover:scale-105 hover:shadow-lg"
-                        onClick={() => setShowContactPage(true)}
-                      >
-                        <span className="text-xl md:text-2xl font-medium text-black mr-2">
-                          Richiedi di Essere Contattato
-                        </span>
-                        <div className="w-6 h-6 rounded-full bg-blue-800 flex items-center justify-center">
-                          <FaArrowRight className="text-sm text-white" />
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -574,22 +556,11 @@ function MainApp() {
               <div className="my-8 flex flex-col md:flex-row gap-4">
                 <div
                   onClick={() => setShowFormScreen(true)}
-                  className="w-full md:flex-1 cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 text-xl transform transition-all duration-500 hover:scale-105 hover:shadow-lg flex items-center justify-between rounded-2xl"
+                  className="w-full cursor-pointer bg-blue-800 hover:bg-blue-700 text-white px-8 py-3 text-xl transform transition-all duration-500 hover:scale-105 hover:shadow-lg flex items-center justify-center rounded-2xl"
                 >
-                  <span>Inizia Ora</span>
+                  <span className="mr-2">Inizia Ora</span>
                   <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
                     <FaArrowRight className="text-sm text-blue-800" />
-                  </div>
-                </div>
-                <div
-                  onClick={() => {
-                    setShowContactFields(true);
-                  }}
-                  className="w-full md:flex-1 cursor-pointer bg-white hover:bg-gray-100 text-black px-8 py-3 text-xl border border-gray-400 transform transition-all duration-500 hover:scale-105 hover:shadow-lg flex items-center justify-between rounded-2xl"
-                >
-                  <span>Richiedi di Essere Contattato</span>
-                  <div className="w-6 h-6 rounded-full bg-blue-800 flex items-center justify-center">
-                    <FaArrowRight className="text-sm text-white" />
                   </div>
                 </div>
               </div>
@@ -721,10 +692,6 @@ function MainApp() {
       </main>
 
       <Footer />
-      <ChatWidget
-        open={chatOpen}
-        setOpen={setChatOpen}
-      />
     </div>
   )
 }
