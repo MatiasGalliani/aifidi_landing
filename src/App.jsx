@@ -168,7 +168,7 @@ function ContactPage({ onBack, onSubmit }) {
     console.log("Datos a enviar:", payload);
   
     try {
-      const response = await fetch("https://backend-richiedidiessereconttato-production.up.railway.app/manuale_aiquinto", {
+      const response = await fetch("https://aifidi-backend-production.up.railway.app/manuale_aiquinto", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

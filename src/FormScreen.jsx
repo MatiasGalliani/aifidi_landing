@@ -92,7 +92,7 @@ function FormScreen({ onClose, onFormSubmit }) {
     // Normalizar telefono quitando espacios
     const normalizedTelefono = telefono.replace(/\s/g, '');
 
-    const endpoint = "https://<MI_SUBDOMINIO>.up.railway.app/api/brevo/subscribe";
+    const endpoint = "https://aifidi-backend-production.up.railway.app/api/brevo/subscribe";
 
     const payload = {
       email: mail,
