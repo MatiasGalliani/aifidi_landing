@@ -49,6 +49,7 @@ function FormScreen({ onClose, onFormSubmit }) {
   const [stepErrors, setStepErrors] = useState({})
   const [cittaSedeLegale, setCittaSedeLegale] = useState("");
   const [cittaSedeOperativa, setCittaSedeOperativa] = useState("");
+  const [honeypot, setHoneypot] = useState("");
 
   // Check viewport width to set isMobile (adjust the px threshold as needed)
   useEffect(() => {
@@ -65,11 +66,20 @@ function FormScreen({ onClose, onFormSubmit }) {
   }, [])
 
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const validateStep5Contatto = () => {
     const errors = {}
     if (!nome.trim()) errors.nome = "Campo obbligatorio"
     if (!cognome.trim()) errors.cognome = "Campo obbligatorio"
-    if (!mail.trim()) errors.mail = "Campo obbligatorio"
+    if (!mail.trim()) {
+      errors.mail = "Campo obbligatorio"
+    } else if (!validateEmail(mail)) {
+      errors.mail = "Formato email non valido"
+    }
     if (!telefono.trim()) errors.telefono = "Campo obbligatorio"
     if (!privacyAccepted) errors.privacy = "Campo obbligatorio"
     return errors
@@ -79,20 +89,24 @@ function FormScreen({ onClose, onFormSubmit }) {
     // Activar la pantalla de carga inmediatamente
     setLoading(true);
 
-    const formData = {
-      nome,
-      cognome,
-      mail,
-      telefono,
-      financingScope,
-      nomeAzienda,
-      cittaSedeLegale,
-      cittaSedeOperativa,
-      importoRichiesto,
-      privacyAccepted,
-    };
+    // Normalizar telefono quitando espacios
+    const normalizedTelefono = telefono.replace(/\s/g, '');
 
-    const endpoint = "https://backend-richiedidiessereconttato-production.up.railway.app/aifidi";
+    const endpoint = "https://<MI_SUBDOMINIO>.up.railway.app/api/brevo/subscribe";
+
+    const payload = {
+      email: mail,
+      listIds: [4],
+      attributes: {
+        NOME: nome,
+        COGNOME: cognome,
+        EMAIL: mail,
+        SCOPO_RICHIESTA: financingScope,
+        IMPORTO_RICHIESTO: importoRichiesto,
+        CITTA_RESIDENZA: cittaSedeLegale
+      },
+      honeypot: honeypot
+    };
 
     try {
       const response = await fetch(endpoint, {
@@ -100,17 +114,21 @@ function FormScreen({ onClose, onFormSubmit }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) throw new Error("Errore nella richiesta");
+      if (!response.ok) {
+        throw new Error("Errore nella richiesta");
+      }
 
       const result = await response.json();
       console.log("Dati inviati:", result);
       onFormSubmit();
     } catch (error) {
       console.error("Errore:", error);
-      // Si ocurre un error, podemos desactivar loading para permitir otro intento
+      // Mostrar error al usuario
+      setStepErrors({ submit: "Errore nell'invio della richiesta. Riprova." });
+      // Desactivar loading para permitir otro intento
       setLoading(false);
     }
   };
@@ -487,9 +505,21 @@ function FormScreen({ onClose, onFormSubmit }) {
                 {stepErrors.telefono && <p className="text-red-500 text-sm mt-1">{stepErrors.telefono}</p>}
               </div>
             </div>
+            {/* Honeypot field - hidden */}
+            <input
+              type="text"
+              name="company"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              style={{ display: 'none' }}
+              tabIndex="-1"
+              autoComplete="off"
+            />
             <div className="mt-4 text-center">
               {/* Si la privacy no es aceptada mostramos error */}
               {stepErrors.privacy && <p className="text-red-500 text-sm">{stepErrors.privacy}</p>}
+              {/* Error de submit */}
+              {stepErrors.submit && <p className="text-red-500 text-sm">{stepErrors.submit}</p>}
             </div>
             <div className="mt-4 space-y-2 max-w-md mx-auto text-center animate-fadeIn">
               <div className="flex items-start mt-6">
@@ -543,10 +573,10 @@ function FormScreen({ onClose, onFormSubmit }) {
                   return
                 }
                 setStepErrors({})
-                handleSubmit();  // Enviar datos al Google Sheet
+                handleSubmit();
               }}
             >
-              Invia Questa Richiesta
+              {loading ? "Invio in corso..." : "Invia Questa Richiesta"}
             </button>
 
           </motion.div>
