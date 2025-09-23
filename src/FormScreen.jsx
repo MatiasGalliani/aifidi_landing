@@ -101,6 +101,7 @@ function FormScreen({ onClose, onFormSubmit }) {
         NOME: nome,
         COGNOME: cognome,
         EMAIL: mail,
+        TELEFONO: normalizedTelefono,
         SCOPO_RICHIESTA: financingScope,
         IMPORTO_RICHIESTO: importoRichiesto,
         CITTA_RESIDENZA: cittaSedeLegale
