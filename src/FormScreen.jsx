@@ -89,9 +89,6 @@ function FormScreen({ onClose, onFormSubmit }) {
     // Activar la pantalla de carga inmediatamente
     setLoading(true);
 
-    // Normalizar telefono quitando espacios
-    const normalizedTelefono = telefono.replace(/\s/g, '');
-
     const endpoint = "https://aifidi-backend-production.up.railway.app/api/brevo/subscribe";
 
     const payload = {
@@ -101,7 +98,7 @@ function FormScreen({ onClose, onFormSubmit }) {
         NOME: nome,
         COGNOME: cognome,
         EMAIL: mail,
-        TELEFONO: normalizedTelefono,
+        TELEFONO: telefono,
         SCOPO_RICHIESTA: financingScope,
         IMPORTO_RICHIESTO: importoRichiesto,
         CITTA_RESIDENZA: cittaSedeLegale
