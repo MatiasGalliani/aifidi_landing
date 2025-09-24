@@ -89,11 +89,12 @@ function FormScreen({ onClose, onFormSubmit }) {
     // Activar la pantalla de carga inmediatamente
     setLoading(true);
 
-    const endpoint = "https://aifidi-backend-production.up.railway.app/api/brevo/subscribe";
+    // Updated endpoint
+    const endpoint = "https://aifidi-backend-production.up.railway.app/api/zoho/lead";
 
+    // Updated payload (removed listIds, added missing attributes)
     const payload = {
       email: mail,
-      listIds: [4],
       attributes: {
         NOME: nome,
         COGNOME: cognome,
@@ -101,7 +102,10 @@ function FormScreen({ onClose, onFormSubmit }) {
         TELEFONO: telefono,
         SCOPO_RICHIESTA: financingScope,
         IMPORTO_RICHIESTO: importoRichiesto,
-        CITTA_RESIDENZA: cittaSedeLegale
+        CITTA_RESIDENZA: cittaSedeLegale,
+        NOME_AZIENDA: nomeAzienda,
+        CITTA_SEDE_LEGALE: cittaSedeLegale,
+        CITTA_SEDE_OPERATIVA: cittaSedeOperativa
       },
       honeypot: honeypot
     };
@@ -121,7 +125,16 @@ function FormScreen({ onClose, onFormSubmit }) {
 
       const result = await response.json();
       console.log("Dati inviati:", result);
-      onFormSubmit();
+      
+      // Handle Zoho API response structure
+      if (result.action && result.action === "success") {
+        onFormSubmit();
+      } else if (result.action === "error") {
+        throw new Error(result.message || "Errore nell'invio della richiesta");
+      } else {
+        // Fallback for other response structures
+        onFormSubmit();
+      }
     } catch (error) {
       console.error("Errore:", error);
       // Mostrar error al usuario
