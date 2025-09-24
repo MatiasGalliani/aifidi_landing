@@ -90,7 +90,7 @@ function FormScreen({ onClose, onFormSubmit }) {
     setLoading(true);
 
     // Updated endpoint
-    const endpoint = "https://aifidi-backend-production.up.railway.app/api/zoho/lead";
+    const endpoint = "https://aifidi-backend-production.up.railway.app/api/zoho/contact";
 
     // Updated payload (removed listIds, added missing attributes)
     const payload = {
