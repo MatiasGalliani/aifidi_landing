@@ -119,7 +119,7 @@ function FormScreen({ onClose, onFormSubmit }) {
       partitaIVA: partitaIVA || null, // Ensure it's null if empty
     };
 
-    const endpoint = "https://accelera-crm-production.up.railway.app/api/forms/aifidi";
+    const endpoint = "https://backend-richiedidiessereconttato-production.up.railway.app/aifidi";
 
     try {
       const response = await fetch(endpoint, {
