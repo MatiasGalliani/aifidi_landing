@@ -133,7 +133,7 @@ function FormScreen({ onClose, onFormSubmit }) {
         throw new Error(result.message || "Errore nell'invio della richiesta");
       } else {
         // Fallback for other response structures
-        onFormSubmit();
+      onFormSubmit();
       }
     } catch (error) {
       console.error("Errore:", error);
